@@ -536,9 +536,13 @@ static int THISCALL oltx_lfs_detour(void *thisp,
 
     /* Feed our Turkish bytes through the native OLTX_ParseBuffer via its
      * trampoline so the ParseBuffer detour does not re-fingerprint us.
-     * ParseBuffer's arg1 is unused; arg2 is the locale/context value which
-     * both LFS and ParseBuffer forward identically to VA 0x73EC50. */
-    int ok = g_oltx_parse_orig(thisp, e->bytes, 0, (int)(uintptr_t)arg2);
+     * ParseBuffer's arg1 is unused; its arg2 is the language code it hands
+     * to the slot lookup at VA 0x73EC50 (_stricmp against each slot's code).
+     * LoadFromStream takes (name, lang_code, stream) and passes its arg1 to
+     * the same lookup (73f243: mov eax,[esp+0x2c]); its arg2 is the stream,
+     * NULL when the engine's default stream is used, and _stricmp(.., NULL)
+     * aborts the game with 0xC0000417. */
+    int ok = g_oltx_parse_orig(thisp, e->bytes, 0, (int)(uintptr_t)arg1);
     if (!ok) {
         log_fmt("[lfs]  OLTX_ParseBuffer returned 0 for %s; "
                 "this-struct is now partially overwritten, returning stream "
