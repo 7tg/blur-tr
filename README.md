@@ -1,127 +1,138 @@
 # blur-tr
 
-Turkish language pack ("yama") for PC Blur (2010, Bizarre Creations /
-Activision).
+PC Blur (2010, Bizarre Creations / Activision) için Türkçe yama.
 
-**No Activision assets are redistributed.** The pack ships one ASI shim
-(an in-memory hook into the game's own localization parser) plus the
-author's own Turkish translation of the game's string tables. The game's
-own fonts, audio, executable, images, PAK archives and `.sig` signatures
-are not touched and are not shipped here.
+**Hiçbir Activision içeriği yeniden dağıtılmaz.** Paketin tek dağıttığı şey:
+küçük bir ASI eklentisi (oyunun kendi lokalizasyon ayrıştırıcısına bellek
+içinde takılan bir hook) ve yazarın oyunun metin tablolarını kendisi
+Türkçeye çevirdiği metinler. Oyunun fontları, sesleri, çalıştırılabilir
+dosyaları, görselleri, PAK arşivleri ve `.sig` imzaları bu depoda yoktur,
+hiçbirine dokunulmaz.
 
-Running this pack requires that you own a legal copy of PC Blur. See
-`DISCLAIMER.md`.
+Bu yamayı kullanmak için **PC Blur'un yasal bir kopyasına sahip olmanız
+gerekir.** Ayrıntılar için `DISCLAIMER.md` dosyasına bakın.
 
-## Install
+## Kurulum
 
 ```sh
 tools/install.sh "/path/to/Blur game folder"
 ```
 
-Example (native Linux copy under Wine):
+Örnek (Wine üzerinde Linux):
 
 ```sh
 tools/install.sh "/home/you/.wine/drive_c/Program Files (x86)/Activision/Blur"
 ```
 
-The installer writes exactly two things into your Blur folder:
+Kurulum, Blur klasörünüze yalnızca iki şey yazar:
 
 ```
 scripts/blur_tr.asi
-scripts/blur-tr-oltx/*.oltx       (25 files)
+scripts/blur-tr-oltx/*.oltx       (25 dosya)
 ```
 
-Loading needs Ultimate ASI Loader (any recent build) in the game folder —
-rename its DLL to `dsound.dll` or `dinput8.dll` next to `Blur.exe` so Blur
-picks it up at startup. The loader then auto-loads `scripts/blur_tr.asi`.
+Yüklenebilmesi için Blur klasöründe **Ultimate ASI Loader** (herhangi güncel
+bir sürüm) bulunmalıdır — loader'ın DLL'ini `dsound.dll` veya `dinput8.dll`
+olarak yeniden adlandırıp `Blur.exe`'nin yanına koyun. Oyun başlarken
+loader'ı yükler, loader da `scripts/blur_tr.asi`'yi otomatik olarak alır.
 
-No language marker file (`english.txt` / `polish.txt`) is created or
-removed. No file under `gamedata/` is touched.
+Hiçbir dil işareti dosyası (`english.txt` / `polish.txt`) oluşturulmaz veya
+silinmez. `gamedata/` altındaki hiçbir dosyaya dokunulmaz. Oyunun **sesli
+içeriği İngilizce kalır**, yalnızca metinler Türkçeleşir.
 
-To revert:
+Geri almak için:
 
 ```sh
 tools/uninstall.sh "/path/to/Blur game folder"
 ```
 
-## Build
+## Derleme
 
-The pack ships pre-built OLTX binaries under `data/oltx-tr/`. To rebuild
-from source:
+Paket, önceden derlenmiş OLTX ikili dosyalarını `data/oltx-tr/` altında
+beraberinde getirir. Kaynaktan yeniden derlemek için:
 
 ```sh
-# Encode data/translated-tr-in-en/*.json -> data/oltx-tr/*.oltx and
-# build src/asi/blur_tr.asi
+# data/translated-tr-in-en/*.json -> data/oltx-tr/*.oltx kodlar ve
+# src/asi/blur_tr.asi'yi derler
 tools/build_pack.sh
 ```
 
-The ASI build needs the i686-w64-mingw32 toolchain (`sudo pacman -S
-mingw-w64-gcc` on Arch, equivalent on other distros).
+ASI derlemesi için `i686-w64-mingw32` araç zinciri gerekir (Arch'ta
+`sudo pacman -S mingw-w64-gcc`, diğer dağıtımlarda eşdeğeri).
 
-Edit the translation itself under `data/translated-tr-in-en/*.json` and
-re-run `tools/build_pack.sh`.
+Çevirinin kendisini düzenlemek için `data/translated-tr-in-en/*.json`
+dosyalarını değiştirip `tools/build_pack.sh`'i tekrar çalıştırın.
 
-## How it works
+## Nasıl Çalışır
 
-Blur's string tables ship inside OLTX bundles embedded in the game's PAK
-archives. Each bundle holds the same key set under several language slots
-(`en`, `fr`, `de`, `it`, `es`) and the engine picks a slot by comparing a
-two-letter language code against the slot name (case-insensitive). On an
-English install the engine selects the `en` slot.
+Blur'un metin tabloları, oyunun PAK arşivleri içine gömülü OLTX paketlerinde
+taşınır. Her paket aynı anahtar kümesini birkaç dil yuvası altında tutar
+(`en`, `fr`, `de`, `it`, `es`) ve motor hangi yuvayı okuyacağına, iki
+harfli dil kodunu yuva adıyla karşılaştırarak karar verir (büyük/küçük
+harfe duyarsız). İngilizce bir kurulumda motor `en` yuvasını seçer.
 
-`blur_tr.asi` hooks the engine's OLTX stream parser. When Blur parses one
-of the bundles that this pack covers, the ASI identifies it by content
-fingerprint (`num_keys`, min key hash), frees the parser's buffers, and
-feeds the engine the pack's own OLTX bytes instead. The engine then reads
-the Turkish strings from the `en` slot of the replacement bundle as if
-they were the original English — no language override, no font swap, no
-exe patch, no `.sig` tampering.
+`blur_tr.asi`, motorun OLTX akış ayrıştırıcısına hook atar. Blur, bu
+yamanın kapsadığı paketlerden birini ayrıştırdığında ASI o paketi içerik
+parmak izi ile tanır (`num_keys`, en küçük anahtar hash'i), ayrıştırıcının
+tamponlarını serbest bırakır ve motora yamanın kendi OLTX baytlarını
+verir. Motor, Türkçe metinleri yama paketinin `en` yuvasından sanki
+orijinal İngilizce metinmiş gibi okur — dil değişikliği yok, font
+değişikliği yok, exe yaması yok, `.sig` müdahalesi yok.
 
-The engine's English font is Latin-1, which cannot render Turkish
-`ıİğĞşŞ`. The build pipeline folds those to their ASCII bases
-(`iIgGsS`); diacritics on characters that ARE in Latin-1 (`çöüÇÖÜ`) are
-kept.
+Motorun İngilizce fontu Latin-1 karakter setini kullandığı için `ıİğĞşŞ`
+karakterlerini çizemez. Derleme hattı bu karakterleri ASCII karşılıklarına
+indirger (`iIgGsS`). Latin-1'de zaten bulunan Türkçe karakterler
+(`çöüÇÖÜ`) olduğu gibi korunur.
 
-The translation covers ~5,800 keys across 25 OLTX bundles. Format tokens,
-placeholder tags and colour codes are preserved verbatim. Proper nouns
-(car brands, mode names, place names) stay in English per the glossary.
+Çeviri, 25 OLTX paketinde yaklaşık 5.800 anahtarı kapsar. Biçim belirteçleri,
+yer tutucu etiketler ve renk kodları birebir korunur. Özel adlar (araba
+markaları, mod isimleri, yer isimleri) sözlüğe göre İngilizce bırakılır.
 
-## Pack contents
+## Paket İçeriği
 
 ```
-src/asi/blur_tr.c             -- ASI shim source (built by `make`)
-src/asi/Makefile              -- MinGW-w64 cross-build
+src/asi/blur_tr.c             -- ASI eklenti kaynağı (make ile derlenir)
+src/asi/Makefile              -- MinGW-w64 çapraz derleme
 tools/oltx.py                 -- OLTX codec (encode / decode / roundtrip)
 tools/transform_translations.py
-                              -- 6-slot JSON (Turkish in pl) -> en-slot
-                                 with ASCII fold + glossary
-tools/build_pack.sh           -- rebuild data/oltx-tr/*.oltx + ASI
-tools/install.sh              -- stage pack into a Blur folder
-tools/uninstall.sh            -- revert what install.sh did
-data/translated-tr-in-en/     -- 25 JSON string tables (committed source)
-data/oltx-tr/                 -- 25 OLTX binaries, encoded from the JSONs
-docs/vfs_paths.md             -- notes on each bundle's content domain
-LICENSE                       -- Apache-2.0 (code)
-LICENSE-translations          -- CC BY-SA 4.0 (translation strings)
-DISCLAIMER.md                 -- unofficial fan work; trademarks
+                              -- 6 yuvalı JSON (Türkçe pl'de) -> en yuvasına
+                                 ASCII indirgeme + sözlük uygulamasıyla
+tools/build_pack.sh           -- data/oltx-tr/*.oltx + ASI yeniden üretir
+tools/install.sh              -- yamayı Blur klasörüne kurar
+tools/uninstall.sh            -- install.sh'in yaptıklarını geri alır
+data/translated-tr-in-en/     -- 25 JSON metin tablosu (kaynak, git'te)
+data/oltx-tr/                 -- JSON'lardan kodlanmış 25 OLTX ikili
+docs/vfs_paths.md             -- her paketin içerik alanına dair notlar
+LICENSE                       -- Apache-2.0 (kod)
+LICENSE-translations          -- CC BY-SA 4.0 (çeviri metinleri)
+DISCLAIMER.md                 -- resmi olmayan hayran işi; ticari markalar
 CHANGELOG.md
 ```
 
-## Testing recipe
+## Test Tarifi
 
-1. Install into a clean copy of Blur that already has Ultimate ASI Loader.
-2. Launch under Wine (32-bit prefix) or native Windows.
-3. Expected: menu text, popups, achievements, multiplayer screens, car info
-   all in Turkish; proper nouns remain English.
-4. Diagnostic log: `<game>/scripts/blur_tr.log` records each OLTX bundle the
-   ASI swapped at parse time. If a screen is still English, note which
-   keys appear there and consult `docs/vfs_paths.md` for the bundle whose
-   keys match.
+1. Blur'un temiz bir kurulumuna Ultimate ASI Loader ekleyin, sonra bu
+   yamayı kurun.
+2. Wine (32-bit prefix) veya yerel Windows üzerinde çalıştırın.
+3. Beklenen: menü metinleri, bildirimler, başarımlar, çok oyunculu ekranlar
+   ve araba bilgileri Türkçe; özel adlar İngilizce.
+4. Teşhis günlüğü: `<oyun>/scripts/blur_tr.log` dosyası, ASI'nin ayrıştırma
+   anında değiştirdiği her OLTX paketini kayıt altına alır. Bir ekran hâlâ
+   İngilizce görünüyorsa, orada görünen anahtar isimlerini not edip
+   `docs/vfs_paths.md` üzerinden hangi pakete ait olduğunu bulabilirsiniz.
 
-## Non-goals
+## Hedef Dışı
 
-- No Activision asset redistribution (fonts, audio, images, exe, PAK archives).
-- No `.sig` tampering, no exe patching, no DLL injection into unrelated
-  processes.
-- No language override — the engine stays in English mode, we just hand it
-  Turkish strings for its English slot.
+- Activision içeriklerinin yeniden dağıtımı yoktur (font, ses, görsel,
+  exe, PAK arşivleri).
+- `.sig` müdahalesi, exe yaması veya ilgisiz süreçlere DLL enjeksiyonu
+  yoktur.
+- Dil değişikliği yoktur — motor İngilizce modda kalır, biz sadece onun
+  İngilizce yuvasına Türkçe metinleri sunarız. Sesli içerik bu nedenle
+  İngilizce olarak kalır.
+
+## Teşekkürler
+
+Yıllar önce PC Blur için ilk Türkçe yamayı yapan **kosemen_76**'ya
+teşekkürler. Bu depodaki hiçbir kod veya çeviri ondan alınmamış olsa da,
+Blur'un Türkçe oynanabilmesinin yolunu ilk açan odur.
