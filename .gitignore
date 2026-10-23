@@ -1,0 +1,25 @@
+# Local-only reference material (may contain Activision-copyrighted strings
+# used as translation source). Never committed.
+extracted-ref/
+build/
+*.pak
+*.sig
+*.loc.en
+*.loc.orig
+
+# OLTX binaries are generally build output and ignored by default; the
+# committed Turkish payload under data/oltx-tr/ is explicitly tracked.
+*.oltx
+!data/oltx-tr/*.oltx
+
+# Built ASI / native build artefacts.
+*.asi
+*.o
+*.obj
+
+# Standard
+__pycache__/
+*.pyc
+.venv/
+.vscode/
+.idea/

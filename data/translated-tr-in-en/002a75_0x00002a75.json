@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "language_codes": [
+    "en",
+    "fr",
+    "de",
+    "it",
+    "es",
+    "pl"
+  ],
+  "keys": [
+    "MP_MESSAGE_OF_THE_DAY",
+    "POB_COMMUNITY_TMS_TEXT",
+    "POB_DLC_TMS_TEXT",
+    "POB_NEWS_TMS_TEXT"
+  ],
+  "key_hashes": [
+    "0xc2b6773e",
+    "0xb084a5a8",
+    "0x9331fc7a",
+    "0xff64b9d4"
+  ],
+  "strings": {
+    "en": [
+      "Blur Çok Oyunculu moduna hos geldiniz",
+      "Varsayilan PoB Topluluk metni blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah",
+      "Varsayilan PoB DLC metni blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah",
+      "Varsayilan PoB Haberler Metni t blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah"
+    ],
+    "fr": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "de": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "it": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "es": [
+      "",
+      "",
+      "",
+      ""
+    ],
+    "pl": [
+      "Blur Çok Oyunculu moduna hoş geldiniz",
+      "Varsayılan PoB Topluluk metni blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah",
+      "Varsayılan PoB DLC metni blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah",
+      "Varsayılan PoB Haberler Metni t blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blaht blah"
+    ]
+  },
+  "hash_order": {
+    "en": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "fr": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "de": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "it": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "es": [
+      2,
+      1,
+      0,
+      3
+    ],
+    "pl": [
+      2,
+      1,
+      0,
+      3
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "language_codes": [
+    "en",
+    "fr",
+    "de",
+    "it",
+    "es",
+    "pl"
+  ],
+  "keys": [],
+  "key_hashes": [],
+  "strings": {
+    "en": [],
+    "fr": [],
+    "de": [],
+    "it": [],
+    "es": [],
+    "pl": []
+  },
+  "hash_order": {
+    "en": [],
+    "fr": [],
+    "de": [],
+    "it": [],
+    "es": [],
+    "pl": []
+  }
+}
